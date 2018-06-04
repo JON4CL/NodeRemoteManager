@@ -1,0 +1,46 @@
+<div ng-controller="getstatusController" style="max-width: 770px;">
+    <div class="panel panel-default statusPanel">
+        <div class="panel-body statusPanelBody">
+            <div>
+                <i class="fa fa-desktop fa-fw" style="color:#d9534f"></i> DESKTOP STATUS
+            </div>
+            <img id="statusScreenShoot" class="statusScreenShoot" style="border: black solid" src="{{b64Image.Data}}"/>
+            <hr />
+            <div>
+                <i class="fa fa-hdd-o fa-fw" style="color:#d9534f"></i> HDD STATUS ({{hdd.Id}})
+            </div>
+            <span class="label label-default">Total: {{ formatBytes(hdd.Total)}}</span>
+            <span class="label label-default">Usado: {{ formatBytes(hdd.Used)}}</span>
+            <span class="label label-default">Libre: {{ formatBytes(hdd.Free)}}</span>
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{hdd.UsedPercent}}" aria-valuemin="0" aria-valuemax="100" style="width: {{hdd.UsedPercent}}%">
+                    <span class="sr-only">{{hdd.UsedPercent}}% Complete (success)</span>{{hdd.UsedPercent}}%
+                </div>
+            </div>
+            <hr />
+            <div>
+                <i class="fa fa-microchip fa-fw" style="color:#d9534f"></i> RAM STATUS
+            </div>
+            <span class="label label-default">Total: {{ formatBytes(ram.Total)}}</span>
+            <span class="label label-default">Usado: {{ formatBytes(ram.Used)}}</span>
+            <span class="label label-default">Libre: {{ formatBytes(ram.Free)}}</span>
+            <div class="progress">
+                <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="{{ram.UsedPercent}}" aria-valuemin="0" aria-valuemax="100" style="width: {{ram.UsedPercent}}%">
+                    <span class="sr-only">{{ram.UsedPercent}}% Complete (success)</span>{{ram.UsedPercent}}%
+                </div>
+            </div>
+            <hr />
+            <div>
+                <i class="fa fa-cubes fa-fw" style="color:#d9534f"></i> SERVICES STATUS
+            </div>
+            <span class="label label-default">Total: {{ services.Total }}</span>
+            <span class="label label-success">Started: {{ services.Started }}</span>
+            <span class="label label-danger">Stoped: {{ services.Stoped }}</span>
+            <hr />
+            <div>
+                <i class="fa fa-tasks fa-fw" style="color:#d9534f"></i> PROCESOS
+            </div>
+            <span class="label label-default">Corriendo: {{process.Running}}</span>
+        </div>
+    </div>
+</div>

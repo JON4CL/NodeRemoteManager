@@ -1,0 +1,59 @@
+<div class="tableContainer" ng-controller="GetFileController">
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-folder-close" aria-hidden="true" style="color:#d9534f"></span> Seleccione el archivo a descargar.
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th class="col_hide">LASTMODIFIED</th>
+                        <th class="col_hide">TYPE</th>
+                        <th class="text-right">SIZE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="d in DetailsDrives" ng-show='showDrives == true'>
+                        <td ng-click="Path = d.DEVICEID; ShowData(d.DEVICEID, 'D');"><span class="glyphicon glyphicon-folder-close"></span> {{ d.DEVICEID}}</td>
+                        <td class="col_hide"></td>
+                        <td class="col_hide"></td>
+                        <td class="text-right">{{ formatBytes(d.FREESPACE)}}</td>
+                    </tr>
+                    <tr ng-show='showReturn == true'>
+                        <td ng-click="ShowData(Path + '..', 'D')"><span class="glyphicon glyphicon-folder-close"></span> ..</td>
+                        <td class="col_hide"></td>
+                        <td class="col_hide"></td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="d in DetailsFiles| filter:{TYPE:'D'}">
+                        <td class="TdAjusteTextoLargo" ng-click="ShowData(Path + d.NAME, d.TYPE)">
+                            <span class="glyphicon glyphicon-folder-close"></span> {{ d.NAME}}
+                        </td>
+                        <td class="col_hide">{{ d.LASTMODIFIED}}</td>
+                        <td class="col_hide">{{ d.TYPE}}</td>
+                        <td class="text-right">{{ formatBytes(d.SIZE)}}</td>
+                    </tr>
+                    <tr ng-repeat="d in DetailsFiles| filter:{TYPE:'F'}">
+                        <td class="TdAjusteTextoLargo">
+                            <span class="glyphicon glyphicon-file" aria-hidden="true" style="color:#d9534f"></span>
+                            <a ng-click="confirmDownload(Path, d.NAME)"> {{ d.NAME}}</a>
+                        </td>
+                        <td class="col_hide">{{ d.LASTMODIFIED}}</td>
+                        <td class="col_hide">{{ d.TYPE}}</td>
+                        <td class="text-right">{{ formatBytes(d.SIZE)}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td class="TdAjusteTextoLargo" colspan="4">
+                            Directorio actual: {{ Path}}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="panel-footer" style="padding-bottom: 0px;">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,112 @@
+<div ng-controller="eventlogController">
+    <!-- RANGO DE FECHA -->
+    <div style="margin-bottom: 10px;">
+        <div class="btn-group" style="width: 255px;">
+            <div class="input-group" style="width: 255px;">
+                <span class="input-group-addon" id="sizing-addon2" style="width: 100px; text-align: left;">Fecha Inicio</span>
+                <div class="input-group date" id="startDate">
+                    <input class="form-control" id="date" placeholder="DD/MM/YYYY" type="text"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="btn-group" style="width: 255px;">
+            <div class="input-group">
+                <span class="input-group-addon" id="sizing-addon2" style="width: 100px; text-align: left;">Fecha Fin</span>
+                <div class="input-group date" id="endDate">
+                    <input class="form-control" id="date" placeholder="DD/MM/YYYY" type="text"/>
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-success" ng-click="getEvents()"><i class="fa fa-search" aria-hidden="true"></i> Buscar</button>
+    </div>
+    <!-- FILTROS AL RESULTADO -->
+    <div style="margin-bottom: 10px;">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">Event Type</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu noclose">
+                <li>
+                    <div class="labelCheck" data-value="0" tabIndex="-1" style="display: flex; padding: 2px 20px" ng-click="$scope.onClickCheck(this)">
+                        <input type="checkbox" checked/>&nbsp;
+                        <span class="label label-success" style="width: 130px; line-height: 15px;">Success</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="labelCheck" data-value="1" tabIndex="-1" style="display: flex; padding: 2px 20px" ng-click="$scope.onClickCheck(this)">
+                        <input type="checkbox" checked/>&nbsp;
+                        <span class="label label-danger" style="width: 130px; line-height: 15px;">Error</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="labelCheck" data-value="2" tabIndex="-1" style="display: flex; padding: 2px 20px" ng-click="$scope.onClickCheck(this)">
+                        <input type="checkbox" checked/>&nbsp;
+                        <span class="label label-warning" style="width: 130px; line-height: 15px;">Warning</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="labelCheck" data-value="3" tabIndex="-1" style="display: flex; padding: 2px 20px" ng-click="$scope.onClickCheck(this)">
+                        <input type="checkbox" checked/>&nbsp;
+                        <span class="label label-info" style="width: 130px; line-height: 15px;">Information</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="labelCheck" data-value="4" tabIndex="-1" style="display: flex; padding: 2px 20px" ng-click="$scope.onClickCheck(this)">
+                        <input type="checkbox" checked/>&nbsp;
+                        <span class="label label-success" style="width: 130px; line-height: 15px;">Security Audit Success</span>
+                    </div>
+                </li>
+                <li>
+                    <div class="labelCheck" data-value="5" tabIndex="-1" style="display: flex; padding: 2px 20px" ng-click="$scope.onClickCheck(this)">
+                        <input type="checkbox" checked/>&nbsp;
+                        <span class="label label-danger" style="width: 130px; line-height: 15px;">Security Audit Failure</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary">Log File</button>
+            <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="caret"></span>
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu noclose">
+                <li ng-repeat="esl in eventSourceList">
+                    <div class="labelCheck" data-value="{{esl}}" tabIndex="-1" style="display: flex; padding: 2px 20px" ng-click="$scope.onClickCheck(this)">
+                        <input id="check{{esl}}" type="checkbox" checked/>&nbsp;
+                        <span class="label label-default" style="width: 130px; line-height: 15px;">{{esl}}</span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- LISTADO DE EVENTOS -->
+    <div class="panelListContainer">
+        <div class="panel showLogFile-{{e.Logfile}} showEventType-{{e.EventType}}" ng-repeat="e in eventList" style="margin-bottom: 2px;" ng-class="panelTypeByEventType[e.EventType]">
+            <div class="panel-heading" style="" ng-click="status[e.RecordNumber].open = !status[e.RecordNumber].open">
+                <div class="label-event-container" style="margin-right: 10px;">
+                    <span class="label label-default label-event">{{ e.Logfile}}</span>
+                    <span class="label label-success label-event" ng-show="e.EventType === '0'">Success</span>
+                    <span class="label label-danger label-event" ng-show="e.EventType === '1'">Error</span>
+                    <span class="label label-warning label-event" ng-show="e.EventType === '2'">Warning</span>
+                    <span class="label label-info label-event" ng-show="e.EventType === '3'">Information</span>
+                    <span class="label label-success label-event" ng-show="e.EventType === '4'">Security Audit Success</span>
+                    <span class="label label-danger label-event" ng-show="e.EventType === '5'">Security Audit Failure</span>
+                </div>
+                <div>[ {{ formatTimeToUser(e.TimeGenerated)}} ]</div>
+                <div>{{ e.SourceName}}</div>
+            </div>
+            <div class="panel-body" ng-show='status[e.RecordNumber].open' style="background-color: #f7f7f9;">
+                <div class="eventMessageContainer">{{ e.Message}}</div>
+            </div>
+        </div>
+    </div>
+</div>

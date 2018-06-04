@@ -1,0 +1,122 @@
+<div ng-controller="SendFileController" nv-file-drop="" uploader="uploader">
+    <form name="upForm">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span class="glyphicon glyphicon-file" style="color:#d9534f" aria-hidden="true"></span> Arraste los archivos necesarios al area demarcada.
+            </div>
+            <div class="panel-body">
+                <div 
+                    ngf-drop 
+                    ngf-select 
+                    ng-model="files" 
+                    class="nv-drop-zone" 
+                    ngf-drag-over-class="dragover" 
+                    ngf-multiple="true" 
+                    ngf-allow-dir="true" 
+                    style="text-align: center;line-height: 50px;"><span class="glyphicon glyphicon-file" aria-hidden="true"></span> Select File or Drop File
+                </div>
+            </div>
+            <div class="panel-footer" ng-show='files && files.length > 0'>
+                <div id='panelDetails'>
+                    <table class="table table-striped table-bordered table-hover" style="margin-bottom: 0px; width: 100%; background-color: white">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th class="col_hide">Size</th>
+                                <th class="col_hide">Type</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="f in files">
+                                <td class="TdAjusteTextoLargo"><strong>{{ f.name}}</strong></td>
+                                <td class="col_hide">{{ f.size / 1024 / 1024|number:2 }} MB</td>
+                                <td class="col_hide">{{ f.type}}</td>
+                                <td>
+                                    <button type="button" class="btn btn-danger btn-xs" ng-click="removeItem(f.$$hashKey)">
+                                        <span class="glyphicon glyphicon-trash"></span> Remove
+                                    </button>
+                                </td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="4">
+                                    <div>
+                                        <div>
+                                            <div class="progress" style="margin-bottom: 5px">
+                                                <div class="progress-bar" role="progressbar" ng-style="{ 'width': progressPercent + '%' }"></div>
+                                            </div>
+                                        </div>
+                                        <button type="button" class="btn btn-success btn-s" ng-click="uploadAll()" ng-disabled="">
+                                            <span class="glyphicon glyphicon-upload"></span> Upload all
+                                        </button>
+                                        <button type="button" class="btn btn-danger btn-s" ng-click="removeAllItems()" ng-disabled="">
+                                            <span class="glyphicon glyphicon-trash"></span> Remove all
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <span class="glyphicon glyphicon-folder-close" aria-hidden="true" style="color:#d9534f"></span> Seleccione la carpeta de destino de los archivos.
+        </div>
+        <div class="panel-body">
+            <table class="table table-striped table-bordered table-hover" id="dataTables" style="margin-bottom: 0px;">
+                <thead>
+                    <tr>
+                        <th>NAME</th>
+                        <th class="col_hide">LASTMODIFIED</th>
+                        <th class="col_hide">TYPE</th>
+                        <th class="text-right">SIZE</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="d in DetailsDrives" ng-show='showDrives == true'>
+                        <td ng-click="Path = d.DEVICEID; ShowData(d.DEVICEID, 'D');"><span class="glyphicon glyphicon-folder-close"></span> {{ d.DEVICEID}}</td>
+                        <td class="col_hide"></td>
+                        <td class="col_hide"></td>
+                        <td class="text-right">{{ formatBytes(d.FREESPACE)}}</td>
+                    </tr>
+                    <tr ng-show='showReturn == true'>
+                        <td ng-click="ShowData(Path + '..', 'D')"><span class="glyphicon glyphicon-folder-close"></span>..</td>
+                        <td class="col_hide"></td>
+                        <td class="col_hide"></td>
+                        <td></td>
+                    </tr>
+                    <tr ng-repeat="d in DetailsFiles| filter:{TYPE:'D'}">
+                        <td  class="TdAjusteTextoLargo" ng-click="ShowData(Path + d.NAME, d.TYPE)">
+                            <span class="glyphicon glyphicon-folder-close"></span> {{ d.NAME}}
+                        </td>
+                        <td class="col_hide">{{ d.LASTMODIFIED}}</td>
+                        <td class="col_hide">{{ d.TYPE}}</td>
+                        <td class="text-right">{{ formatBytes(d.SIZE)}}</td>
+                    </tr>
+                    <tr ng-repeat="d in DetailsFiles| filter:{TYPE:'F'}">
+                        <td class="TdAjusteTextoLargo">
+                            <span class="glyphicon glyphicon-file" aria-hidden="true" style="color:#d9534f"></span> {{ d.NAME}}
+                        </td>
+                        <td class="col_hide">{{ d.LASTMODIFIED}}</td>
+                        <td class="col_hide">{{ d.TYPE}}</td>
+                        <td class="text-right">{{ formatBytes(d.SIZE)}}</td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="4" class="TdAjusteTextoLargo">
+                            Directorio actual: {{ Path}}
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        <div class="panel-footer" style="padding-bottom: 0px;">
+        </div>
+    </div>
+</div>

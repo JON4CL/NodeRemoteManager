@@ -1,0 +1,28 @@
+{
+  "name": "srmconsole",
+  "version": "1.0.0",
+  "description": "Webconsole for SRM",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Jonathan Araneda",
+  "license": "ISC",
+  "dependencies": {
+    "angular": "^1.6.1",
+    "angular-dialog-service": "^5.3.0",
+    "angular-route": "^1.6.1",
+    "angular-sanitize": "^1.6.1",
+    "angular-ui-bootstrap": "^2.4.0",
+    "bootstrap": "^3.3.7",
+    "bootstrap-datepicker": "^1.6.4",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.1.1",
+    "metismenu": "^2.6.1",
+    "ng-file-upload": "^12.2.13",
+    "raphael": "^2.2.7"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}

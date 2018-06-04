@@ -1,0 +1,41 @@
+IP
+Inventario Software (OK)
+Inventario Hardware 
+Windows Event Log
+Hardware State
+Running Programs
+Start Program
+Cambio de Hora
+Reinicio
+Ver Archivo
+Envio de archivo
+Descarga/vista de archivo
+Audit
+LiveScreenView
+
+-------------------------------------------------------------
+SCHEDULER
+npm install --save node-cron
+
+REQUEST AND RESPONSE LOGGIN
+npm install --save winston express-winston
+
+UPLOADER
+bower install angular-ui-uploader
+
+ANGULAR GRID
+npm install angular-ui-grid
+
+REPORTES
+npm install fluentreports
+
+Livescreenview
+ var getImageResult = addon.getlatestimage();
+ var b64encoded = btoa(String.fromCharCode.apply(null, getImageResult.imagebuffer));
+ var datajpg = "data:image/jpg;base64," + b64encoded;
+ document.getElementById("myimage").src = datajpg;
+
+Inventario Hardware
+{
+ ""MOTHERBOARD"":{""Manufacturer"":"""",}
+}

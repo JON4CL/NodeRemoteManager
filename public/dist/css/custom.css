@@ -1,0 +1,84 @@
+.nv-drop-zone { 
+    border: dotted 3px lightgray; 
+}
+.dragover { 
+    border: dotted 3px red; 
+} 
+.full-center {
+    position: absolute; 
+    top: 50%; 
+    left: 50%; 
+    transform: translate(-50%,-50%);
+    width: 100%;
+    height: 100%;
+}
+.eventMessageContainer {
+    overflow: auto;
+}
+.label-event-container {
+    display: inline-block;
+    float: left;
+    width: 70px;
+    margin-right: 10px;
+}
+.label-event {
+    width: 100%;
+    display: block;
+    float: left;
+    margin-bottom: 4px;
+    margin-right: 4px;
+}
+.TdAjusteTextoLargo {
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.statusPanel {
+    display: inline-block; 
+    vertical-align: top; 
+    margin-bottom: 5px;
+}
+.statusPanelBody {
+    padding: 15px 5px 15px 5px;
+}
+@media all and (max-width: 1024px) {
+    .statusScreenShoot {
+        height: 540px;
+        width: 720px;
+    }
+}
+@media all and (max-width: 768px) {
+    .statusScreenShoot {
+        height: 320px;
+        width: 480px;
+    }
+}
+@media all and (max-width: 479px) {
+    .eventMessageContainer {
+        overflow: scroll;
+    }
+    .label-event-container {
+        width: 100%;
+        margin-right: 0;
+    }
+    .label-event {
+        display: inline-block;
+        width: 100px;
+        float: left;
+        margin-bottom: 4px;
+        margin-right: 4px;
+    }
+    .col_hide{
+        display:none;
+        width:0;
+        height:0;
+        opacity:0;
+        visibility: collapse;
+    }
+    .full-center {
+        width: 100%;
+    }
+    .statusScreenShoot {
+        height: 240px;
+        width: 320px;
+    }
+}

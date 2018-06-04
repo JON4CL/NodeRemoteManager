@@ -1,0 +1,35 @@
+@echo off
+REM ARCHIVOS INCLUYEN PATH COMPLETO (UNIDAD:\PATH\NOMBRE_ARCHIVO.EXT)
+REM [%1] ARCHIVO DE ORIGEN
+REM [%2] ARCHIVO DE DESTINO
+
+IF NOT EXIST %1 GOTO ERROR_ORIGEN
+
+REM ELIMINA EL ARCHIVO DE DESTINO
+IF EXIST %2 (
+    DEL /F /Q %2 > nul
+    IF NOT %errorlevel% == 0 GOTO ERROR_DEL
+)
+
+REM MUEVE EL ARCHIVO DE ORIGEN AL DESTINO
+MOVE /Y %1 %2 > nul
+IF NOT %errorlevel% == 0 GOTO ERROR_MOVE
+<nul (set/p z={"error_code": 0, "err_desc": ""})
+GOTO END
+
+:ERROR_ORIGEN
+<nul (set/p z={"error_code": 1, "err_desc": "EL ARCHIVO DE ORIGEN NO EXISTE"})
+GOTO END
+
+:ERROR_DEL
+<nul (set/p z={"error_code": 2, "err_desc": "EL ARCHIVO DE DESTINO NO PUDO SER ELIMINADO"})
+GOTO END
+
+:ERROR_MOVE
+<nul (set/p z={"error_code": 3, "err_desc": "EL ARCHIVO DE ORIGEN NO PUDO MOVERSE AL DESTINO SELECCIONADO"})
+REM ELIMINA EL ARCHIVO DE ORIGEN
+DEL /F /Q %1 > nul
+GOTO END
+
+:END
+exit /b
